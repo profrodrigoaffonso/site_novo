@@ -57,10 +57,6 @@ class SiteController extends Controller
 
         $dados['cep'] = preg_replace("/[^0-9]/", "", $dados['cep']);;
 
-        // $response = Cep::consultaCep($cep);
-
-        // dd($response);
-
         $curl = curl_init();
 
         curl_setopt_array($curl, array(

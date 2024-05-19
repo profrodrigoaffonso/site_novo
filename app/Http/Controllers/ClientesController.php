@@ -33,7 +33,11 @@ class ClientesController extends Controller
     public function edit($uuid)
     {
         $cliente = Cliente::where('uuid', $uuid)->first();
-        return view('admin.clientes.edit', compact('cliente'));
+        if($cliente){
+            return view('admin.clientes.edit', compact('cliente'));
+        } else {
+            return redirect(route('admin.clientes.index'));
+        }
     }
 
     public function update(ClientesRequest $request)
@@ -41,7 +45,13 @@ class ClientesController extends Controller
         $dados = $request->all();
         $dados['cep'] = str_replace('-', '', $dados['cep']);
         $cliente = Cliente::where('uuid', $dados['uuid'])->first();
-        $cliente->update($dados);
-        return redirect(route('admin.clientes.index'));
+        if($cliente){
+            unset($dados['uuid']);
+            $cliente->update($dados);
+            return redirect(route('admin.clientes.index'));
+        } else {
+            return redirect(route('admin.clientes.index'));
+        }
+        
     }
 }
