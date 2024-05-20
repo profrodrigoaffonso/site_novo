@@ -12,6 +12,7 @@ Route::get('/user', function (Request $request) {
 
 
 Route::post('cep', [SiteController::class, 'cep']);
+Route::post('valida-cpf', [SiteController::class, 'validaCpf']);
 Route::post('contagem-link', [SiteController::class, 'contagemLink']);
 
 Route::get('atual', [ComandosController::class, 'atual']);
