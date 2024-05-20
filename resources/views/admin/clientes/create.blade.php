@@ -7,7 +7,7 @@
 <form method="post" action="{{ route('admin.clientes.store') }}" autocomplete="off">
     @csrf
     <div class="row">
-        <div class="col-8">
+         <div class="col-6">
             @component('components.forms.input', [
                 'id'        => 'nome',
                 'name'      => 'nome',
@@ -18,7 +18,19 @@
             ])
             @endcomponent
         </div>
-        <div class="col-4">
+        <div class="col-3">
+            @component('components.forms.input', [
+                'id'        => 'cpf',
+                'name'      => 'cpf',
+                'label'     => 'CPF',
+                'type'      => 'text',
+                'value'     => old('cpf'),
+                'maxlength' => 14,
+                'extra'     => 'onblur=validaCpf()'
+            ])
+            @endcomponent
+        </div>
+        <div class="col-3">
             @component('components.forms.input', [
                 'id'        => 'cep',
                 'name'      => 'cep',
