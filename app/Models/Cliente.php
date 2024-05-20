@@ -9,7 +9,7 @@ class Cliente extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['uuid', 'nome', 'endereco', 'numero', 'complemento', 'bairro', 'cidade', 'uf', 'cep'];
+    protected $fillable = ['uuid', 'nome', 'cpf', 'endereco', 'numero', 'complemento', 'bairro', 'cidade', 'uf', 'cep'];
 
     public static function paginacao() {
 
