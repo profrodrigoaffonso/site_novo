@@ -49,6 +49,51 @@ class SiteController extends Controller
 
     }
 
+    public function validaCpf(Request $request) {
+
+        $dados = $request->all();
+
+        $resposta = array();
+
+        // Extrai somente os números
+        $cpf = preg_replace( '/[^0-9]/is', '', $dados['cpf'] );
+
+        // Verifica se foi informado todos os digitos corretamente
+        if (strlen($cpf) != 11) {
+            $resposta['status'] = 'error';
+            $resposta['msg'] = '<b>CPF inválido!</b>';
+            return json_encode($resposta);
+            exit;
+        }
+
+        // Verifica se foi informada uma sequência de digitos repetidos. Ex: 111.111.111-11
+        if (preg_match('/(\d)\1{10}/', $cpf)) {
+            $resposta['status'] = 'error';
+            $resposta['msg'] = '<b>CPF inválido!</b>';
+            return json_encode($resposta);
+            exit;
+        }
+
+        // Faz o calculo para validar o CPF
+        for ($t = 9; $t < 11; $t++) {
+            for ($d = 0, $c = 0; $c < $t; $c++) {
+                $d += $cpf[$c] * (($t + 1) - $c);
+            }
+            $d = ((10 * $d) % 11) % 10;
+            if ($cpf[$c] != $d) {
+                $resposta['status'] = 'error';
+                $resposta['msg'] = '<b>CPF inválido!</b>';
+                return json_encode($resposta);
+                exit;
+            }
+        }
+        $resposta['status'] = 'success';
+        $resposta['msg'] = 'CPF válido!';
+        return json_encode($resposta);
+
+    }
+
+
     public function cep(Request $request)
     {
         // die;
