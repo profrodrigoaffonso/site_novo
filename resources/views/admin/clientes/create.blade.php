@@ -126,6 +126,42 @@
         e.target.value = valor;
     });
 
+    var cpf = document.getElementById('cpf');
+    cpf.addEventListener('input', function (e) {
+        var valor = e.target.value;
+        valor = valor.replace(/\D/g, ''); // remove tudo que não é número
+        valor = valor.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4")
+        e.target.value = valor;
+    });
+
+    function validaCpf(){
+        cpf = document.getElementById('cpf').value;
+
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                // código a ser executado em caso de sucesso
+                var responseObj = JSON.parse(this.responseText)
+                if(responseObj['status'] == 'error'){
+                    document.getElementById('js_error_cpf').innerHTML = responseObj['msg']
+                    document.getElementById('js_error_cpf').style.display = 'block'
+                    document.getElementById('js_error_cpf').style.color = 'red'
+                    document.getElementById('cpf').focus()
+                } else {
+                    document.getElementById('js_error_cpf').innerHTML = ''
+                    document.getElementById('js_error_cpf').style.display = 'none'
+                }
+
+
+            } else if (this.readyState == 4 && this.status != 200) {
+                // código a ser executado em caso de erro
+            }
+        };
+        xhttp.open("POST", "/api/valida-cpf", true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send("cpf=" + cpf);
+    }
+
     function consultaCep(){
 
         cep = document.getElementById('cep').value;
