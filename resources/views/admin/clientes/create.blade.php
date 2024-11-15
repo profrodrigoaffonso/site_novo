@@ -38,7 +38,7 @@
                 'type'      => 'text',
                 'value'     => old('cep'),
                 'maxlength' => 9,
-                'extra'     => 'onblur=consultaCep()'
+                //'extra'     => 'onblur=consultaCep()'
             ])
             @endcomponent
         </div>
