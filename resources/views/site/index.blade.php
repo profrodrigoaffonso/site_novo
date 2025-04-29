@@ -60,7 +60,7 @@
         </div>
         <!-- About Section Content-->
         <div class="row">
-            <div class="col-lg-12 text-center"><p class="lead">Profissional que trabalha a mais de 15 anos na área de desenvolvimento WEB.</p></div>
+            <div class="col-lg-12 text-center"><p class="lead">Profissional que trabalha a mais de 25 anos na área de desenvolvimento WEB.</p></div>
             {{-- <div class="col-lg-4 me-auto"><p class="lead">You can create your own custom avatar for the masthead, change the icon in the dividers, and add your email address to the contact form to make it fully functional!</p></div> --}}
         </div>
         <!-- About Section Button-->
