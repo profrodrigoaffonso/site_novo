@@ -9,6 +9,72 @@ use Illuminate\Http\Request;
 class ClientesController extends Controller
 {
 
+    function listaApi() {
+
+        if(isset($_GET['size'])){
+            $size = $_GET['size'];
+        } else {
+            $size = 100;
+        }
+
+        if(isset($_GET['page'])){
+            $page = $_GET['page'];
+            $page--;
+        } else {
+            $page = 0;
+        }
+
+        if($page == 0){
+            $inicio = 0;
+        } else {
+            $inicio = $page * $size;
+        }
+
+        $json = file_get_contents('php://input');
+
+        // echo $json; die;
+
+        $clientes = Cliente::select('id', 'uuid', 'nome', 'data_nascimento', 'email',
+                                    'cidade', 'uf', 'updated_at')
+                            ->orderBy('id', 'ASC')
+                            ->offset($inicio)
+                            ->limit($size)
+                            ->get()
+                            ->toArray();
+
+        $total = Cliente::count();
+
+        $totalpages = ceil($total/$size);
+
+        if(($page + 1) < $totalpages) {
+            $hasNext = true;
+        } else {
+            $hasNext = false;
+        }
+
+        if(($page) > 0) {
+            $hasPrevious = true;
+        } else {
+            $hasPrevious = false;
+        }
+
+        // dd($total);
+
+        $resposta = array(
+            'total'         => $total,
+            'page'          => $page + 1,
+            'perpage'       => $size,
+            'totalpages'    => $totalpages,
+            'hasPrevious'   => (bool)$hasPrevious,
+            'hasNext'       => (bool)$hasNext,
+            'data'         => $clientes
+
+        );
+
+        echo json_encode($resposta);
+
+    }
+
     public function index()
     {
         $clientes = Cliente::paginacao();
@@ -52,6 +118,6 @@ class ClientesController extends Controller
         } else {
             return redirect(route('admin.clientes.index'));
         }
-        
+
     }
 }
