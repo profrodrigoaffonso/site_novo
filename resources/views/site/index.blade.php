@@ -166,7 +166,7 @@
 
 </script>
 <!-- Contact Section-->
-<section class="page-section" id="trabalhe">
+{{-- <section class="page-section" id="trabalhe">
     <div class="container">
         <!-- Contact Section Heading-->
         <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Trabalhe conosco</h2>
@@ -244,5 +244,5 @@
             </div>
         </div>
     </div>
-</section>
+</section> --}}
 @endsection
