@@ -14,6 +14,7 @@ use App\Http\Controllers\ComandosController;
 // });
 Route::get('/', [SiteController::class, 'index'])->name('site.index');
 Route::post('/enviar', [SiteController::class, 'enviar'])->name('site.enviar');
+Route::post('/trabalhe', [SiteController::class, 'trabalhe'])->name('site.trabalhe');
 Route::get('/atualizar', [ComandosController::class, 'atualizar']);
 
 

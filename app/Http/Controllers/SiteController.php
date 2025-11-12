@@ -10,6 +10,9 @@ use App\Models\Cep;
 use App\Models\Contagem;
 use App\Models\Link;
 use App\Models\ContagemLink;
+use App\Models\Curriculo;
+
+use Smalot\PdfParser\Parser;
 
 class SiteController extends Controller
 {
@@ -23,6 +26,45 @@ class SiteController extends Controller
             'tipo'  => 'S'
         ]);
         return view('site.index', compact('tecnologias', 'links'));
+    }
+
+    public function trabalhe(Request $request)
+    {
+        $dados = $request->all();
+
+        $curriculo = $request->file('curriculo');
+
+        // dd($curriculo->getClientOriginalName());
+
+        $nome = uniqid().'.pdf';
+
+        //getClientMimeType();
+
+        if (move_uploaded_file($curriculo->getPathname(), 'curriculos/' . $nome)) {
+
+            // dd($curriculo->getClientMimeType());
+
+            $parser     = new Parser();
+            $pdf        = $parser->parseFile('curriculos/' . $nome);
+            $conteudo   = $pdf->getText();
+
+            $dados['nome_arquivo']  = $curriculo->getClientOriginalName();
+            $dados['path']          = 'curriculos/' . $nome;
+            $dados['conteudo']      = $conteudo;
+
+            Curriculo::create($dados);
+
+
+
+
+           // echo nl2br($text);
+
+        }
+
+        //SiteContato::create($dados);
+
+        return redirect('/#trabalhe')->with('mensagem-trabalhe', 'Enviado com sucesso!');
+
     }
 
     public function enviar(Request $request)
