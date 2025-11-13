@@ -96,6 +96,9 @@
                 <form method="post" action="{{ route('site.enviar') }}">
                     @csrf
                     <!-- Name input-->
+                    @if(session('mensagem'))
+                        <h5 class="text-center" style="color: #f00">{{ session('mensagem') }}</h5>
+                    @endif
                     <div class="form-floating mb-3">
                         <input required class="form-control" id="nome" name="nome" type="text" placeholder="Enter your name..." data-sb-validations="required" />
                         <label for="name">Nome</label>
@@ -120,9 +123,6 @@
                         <label for="message">Mensagem</label>
                         <div class="invalid-feedback" data-sb-feedback="message:required">Preenchimento obrigatório.</div>
                     </div>
-                    @if(session('mensagem'))
-                        <h5 class="text-center" style="color: #f00">{{ session('mensagem') }}</h5>
-                    @endif
                     <!-- Submit success message-->
                     <!---->
                     <!-- This is what your users will see when the form-->
