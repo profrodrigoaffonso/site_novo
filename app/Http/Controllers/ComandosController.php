@@ -14,12 +14,12 @@ class ComandosController extends Controller
     {
         $dados = $request->all();
         if($dados['token'] == env('TOKEN')){
-            if(!empty($dados['categoria']) and !empty($dados['forma_pagamento']) and !empty($dados['valor'])) {                                                     
+            if(!empty($dados['categoria']) and !empty($dados['forma_pagamento']) and !empty($dados['valor'])) {
                 unset($dados['token']);
                 Financa::create($dados);
                 echo 'Salvo com sucesso!';
             } else {
-                echo 'Preencha todos os dados!';      
+                echo 'Preencha todos os dados!';
             }
         }
     }
@@ -67,23 +67,34 @@ class ComandosController extends Controller
             // dd($dados);
             curl_close($curl);
 
-            $sql .= "UPDATE contagens SET cidade = '{$dados->city}', pais = '{$dados->country}'
-                        WHERE ip = '{$contagem->ip}';";
 
-            echo $sql;
-            /// die;
+            Contagem::where('ip', $contagem->ip)->update([
+                'cidade'    => $dados->city,
+                'pais'      => $dados->country
+            ]);
+
+           // echo "UPDATE contagens SET cidade = '{$dados->city}', pais = '{$dados->country}'
+            //            WHERE ip = '{$contagem->ip}';";
+
+            // $sql = "UPDATE contagens SET cidade = '{$dados->city}', pais = '{$dados->country}'
+            //             WHERE ip = '{$contagem->ip}';";
+
+            // $fp = fopen($_SERVER['DOCUMENT_ROOT'] . "/atualizar.sql","a");
+
+            // fwrite($fp,$sql);
+
+            // fclose($fp);
+
+            // echo $sql;
+            // die;
             // dd($dados);
             // echo $response;
         }
 
 
-        $fp = fopen($_SERVER['DOCUMENT_ROOT'] . "/atualizar.sql","wb");
 
-        fwrite($fp,$sql);
 
-        fclose($fp);
-
-        die($sql);
+        //die($sql);
 
     }
 }
