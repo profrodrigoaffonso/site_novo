@@ -63,32 +63,35 @@ class ComandosController extends Controller
 
             $response = curl_exec($curl);
 // dd($response);
-            $dados = json_decode($response);
-            // dd($dados);
-            curl_close($curl);
+
+            if($response){
+                $dados = json_decode($response);
+                // dd($dados);
+                curl_close($curl);
 
 
-            Contagem::where('ip', $contagem->ip)->update([
-                'cidade'    => $dados->city,
-                'pais'      => $dados->country
-            ]);
+                Contagem::where('ip', $contagem->ip)->update([
+                    'cidade'    => $dados->city,
+                    'pais'      => $dados->country
+                ]);
 
-           // echo "UPDATE contagens SET cidade = '{$dados->city}', pais = '{$dados->country}'
-            //            WHERE ip = '{$contagem->ip}';";
+            // echo "UPDATE contagens SET cidade = '{$dados->city}', pais = '{$dados->country}'
+                //            WHERE ip = '{$contagem->ip}';";
 
-            // $sql = "UPDATE contagens SET cidade = '{$dados->city}', pais = '{$dados->country}'
-            //             WHERE ip = '{$contagem->ip}';";
+                // $sql = "UPDATE contagens SET cidade = '{$dados->city}', pais = '{$dados->country}'
+                //             WHERE ip = '{$contagem->ip}';";
 
-            // $fp = fopen($_SERVER['DOCUMENT_ROOT'] . "/atualizar.sql","a");
+                // $fp = fopen($_SERVER['DOCUMENT_ROOT'] . "/atualizar.sql","a");
 
-            // fwrite($fp,$sql);
+                // fwrite($fp,$sql);
 
-            // fclose($fp);
+                // fclose($fp);
 
-            // echo $sql;
-            // die;
-            // dd($dados);
-            // echo $response;
+                // echo $sql;
+                // die;
+                // dd($dados);
+                // echo $response;
+            }
         }
 
 
