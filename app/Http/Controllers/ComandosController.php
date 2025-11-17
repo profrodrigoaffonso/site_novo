@@ -64,12 +64,11 @@ class ComandosController extends Controller
             $response = curl_exec($curl);
 // dd($response);
 
+            curl_close($curl);
+
             if($response){
                 $dados = json_decode($response);
                 // dd($dados);
-                curl_close($curl);
-
-
                 Contagem::where('ip', $contagem->ip)->update([
                     'cidade'    => $dados->city,
                     'pais'      => $dados->country
